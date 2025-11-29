@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kafeler - Brew&Review</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #3e2723; color: #fcf6f0; font-family: 'Poppins', sans-serif; padding: 20px; }
+        
+        .filter-container {
+            background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;
+            margin-bottom: 20px; display: flex; gap: 10px; justify-content: center;
+        }
+        input, button { padding: 10px; border-radius: 5px; border: none; }
+        button { background: #d7ccc8; color: #3e2723; cursor: pointer; font-weight: bold; }
+        
+        .cafe-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+        }
+        .cafe-card {
+            background: #5d4037; border: 2px solid #8d6e63; border-radius: 15px;
+            padding: 20px; transition: transform 0.3s;
+        }
+        .cafe-card:hover { transform: translateY(-5px); background: #6d4c41; }
+        .rating { color: #ffca28; font-weight: bold; font-size: 1.2rem; }
+        .badge { background: #8d6e63; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Kafeleri Keşfet ☕️</h1>
+
+    <div class="filter-container">
+        <form action="/cafes" method="get" style="display:flex; gap:10px;">
+            <input type="text" name="city" placeholder="Şehir Ara (örn: Istanbul)">
+            <button type="submit">Ara</button>
+        </form>
+        <form action="/cafes" method="get">
+            <input type="hidden" name="dessert" value="true">
+            <button type="submit">🍰 Tatlısı Olanlar</button>
+        </form>
+        <a href="/cafes"><button>Tümünü Gör</button></a>
+    </div>
+
+    <div class="cafe-grid">
+        <div class="cafe-card" th:each="cafe : ${cafes}">
+            <h2 th:text="${cafe.name}">Kafe Adı</h2>
+            <p>📍 <span th:text="${cafe.city}">Şehir</span></p>
+            <p class="rating">★ <span th:text="${cafe.totalRating}">4.5</span> / 5.0</p>
+            <p th:if="${cafe.hasDessert}" class="badge">🍰 Tatlı Mevcut</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;" th:text="${cafe.address}">Adres</p>
+            <br>
+            <button style="width:100%">İncele</button>
+        </div>
+    </div>
+
+</body>
+</html>

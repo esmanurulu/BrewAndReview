@@ -1,5 +1,8 @@
 package com.brewandreview;
 
+import com.brewandreview.model.User;
+import com.brewandreview.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,25 +16,24 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    // Mock Kullanıcı
-    private final String MOCK_USER = "kahvesever";
-    private final String MOCK_PASS = "1234";
+    @Autowired
+    private UserRepository userRepository;
 
-    // Ana Sayfa (index.html)
+    // Ana Sayfa (Login Ekranı)
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
-    // Dashboard Sayfası
+    // Dashboard Sayfası (Giriş yaptıktan sonra gidilen yer)
     @GetMapping("/dashboard")
     public String dashboard(@RequestParam(name = "user", required = false, defaultValue = "Misafir") String user,
             Model model) {
         model.addAttribute("user", user);
-        return "dashboard";
+        return "dashboard"; // dashboard.html dosyasını arar
     }
 
-    // Giriş - json
+    // Giriş İşlemi (JSON döner)
     @PostMapping("/login")
     @ResponseBody
     public Map<String, String> login(@RequestParam("username") String username,
@@ -39,12 +41,16 @@ public class LoginController {
 
         Map<String, String> response = new HashMap<>();
 
-        if (MOCK_USER.equals(username) && MOCK_PASS.equals(password)) {
+        // Veritabanından kullanıcıyı bul
+        User dbUser = userRepository.findByUsername(username);
+
+        // Kullanıcı var mı ve şifre doğru mu?
+        if (dbUser != null && dbUser.getPasswordHash().trim().equals(password.trim())) {
             response.put("status", "success");
-            response.put("message", "Giriş Başarılı! Java Backend Çalışıyor...");
+            response.put("message", "Giriş Başarılı!");
         } else {
             response.put("status", "error");
-            response.put("message", "Hatalı Şifre!");
+            response.put("message", "Kullanıcı adı veya şifre hatalı!");
         }
 
         return response;
