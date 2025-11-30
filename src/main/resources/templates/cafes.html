@@ -46,7 +46,16 @@
         <div class="cafe-card" th:each="cafe : ${cafes}">
             <h2 th:text="${cafe.name}">Kafe Adı</h2>
             <p>📍 <span th:text="${cafe.city}">Şehir</span></p>
-            <p class="rating">★ <span th:text="${cafe.totalRating}">4.5</span> / 5.0</p>
+            
+            <div class="rating">
+                <span th:if="${cafe.totalRating != null}">
+                    ★ <span th:text="${cafe.totalRating}">4.5</span> / 5.0
+                </span>
+                
+                <span th:if="${cafe.totalRating == null}" style="color: #cfd8dc; font-size: 0.9rem; font-style: italic;">
+                    🆕 Henüz Puanlanmadı
+                </span>
+            </div>
             <p th:if="${cafe.hasDessert}" class="badge">🍰 Tatlı Mevcut</p>
             <p style="font-size: 0.9rem; opacity: 0.8;" th:text="${cafe.address}">Adres</p>
             <br>

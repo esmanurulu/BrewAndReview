@@ -2,6 +2,9 @@ package com.brewandreview;
 
 import com.brewandreview.model.User;
 import com.brewandreview.repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,26 +36,25 @@ public class LoginController {
         return "dashboard"; // dashboard.html dosyasını arar
     }
 
-    // Giriş İşlemi (JSON döner)
     @PostMapping("/login")
     @ResponseBody
     public Map<String, String> login(@RequestParam("username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password,
+            HttpSession session) { // Session parametresi eklendi
 
         Map<String, String> response = new HashMap<>();
-
-        // Veritabanından kullanıcıyı bul
         User dbUser = userRepository.findByUsername(username);
 
-        // Kullanıcı var mı ve şifre doğru mu?
         if (dbUser != null && dbUser.getPasswordHash().trim().equals(password.trim())) {
+            // KRİTİK NOKTA: Kullanıcıyı hafızaya atıyoruz
+            session.setAttribute("currentUser", dbUser);
+
             response.put("status", "success");
             response.put("message", "Giriş Başarılı!");
         } else {
             response.put("status", "error");
-            response.put("message", "Kullanıcı adı veya şifre hatalı!");
+            response.put("message", "Hatalı şifre!");
         }
-
         return response;
     }
 }

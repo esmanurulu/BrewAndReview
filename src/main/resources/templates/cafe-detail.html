@@ -35,11 +35,62 @@
 <div class="container">
     <a href="/cafes" class="btn-back">← Listeye Dön</a>
 
-    <div class="cafe-header">
-        <h1 th:text="${cafe.name}">Kafe Adı</h1>
-        <p class="info">📍 <span th:text="${cafe.city}">Şehir</span> | ⭐️ <span th:text="${cafe.totalRating}">4.5</span></p>
-        <p th:text="${cafe.address}">Açık Adres</p>
+    <div style="text-align: center; margin: 40px 0;">
+        <a th:href="@{/cafe/{id}/review(id=${cafe.cafeId})}" class="btn-review">
+            ✍️ Bu Kafeyi Değerlendir
+        </a>
     </div>
+
+    <h2 class="section-title">💬 Son Değerlendirmeler</h2>
+    <div class="reviews-list">
+        <div class="review-card" th:each="review : ${reviews}">
+            <div style="display:flex; justify-content:space-between;">
+                <strong th:text="${review.user.username}">Kullanıcı</strong>
+                <span style="color:#ffca28;" th:text="'★ ' + ${review.ratingOverall}">5.0</span>
+            </div>
+            
+            <div th:if="${not #lists.isEmpty(review.consumedItems)}" style="font-size:0.8rem; color:#d7ccc8; margin:5px 0;">
+                <span>Denediği Lezzetler: </span>
+                <span th:each="item : ${review.consumedItems}" th:text="${item.name} + ', '"></span>
+            </div>
+
+            <p style="margin-top:10px;" th:text="${review.comment}">Yorum metni...</p>
+            <small style="opacity:0.5;" th:text="${review.reviewDate}">Tarih</small>
+        </div>
+    </div>
+
+<style>
+    /* Yeni CSS Stilleri */
+    .btn-review {
+        background: #ffca28; color: #3e2723; padding: 15px 40px; 
+        border-radius: 30px; font-weight: bold; text-decoration: none; font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(255, 202, 40, 0.4); transition: 0.3s;
+    }
+    .btn-review:hover { transform: scale(1.05); background: #ffb300; }
+    
+    .review-card {
+        background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; margin-bottom: 15px;
+        border-left: 4px solid #ffca28;
+    }
+</style>
+
+<div class="cafe-header">
+    <h1 th:text="${cafe.name}">Kafe Adı</h1>
+    
+    <p class="info">
+        📍 <span th:text="${cafe.city}">Şehir</span> 
+        | 
+        <span th:if="${cafe.totalRating != null}" style="color: #ffca28; font-weight: bold;">
+            ⭐️ <span th:text="${cafe.totalRating}">4.5</span>
+        </span>
+        
+        <span th:if="${cafe.totalRating == null}" style="opacity: 0.7; font-style: italic;">
+            (Henüz Puanlanmadı)
+        </span>
+    </p>
+    
+    <p th:text="${cafe.address}" style="font-size: 0.9rem;">Açık Adres</p>
+</div>
 
     <h2 class="section-title">📜 Menü</h2>
     <div class="list-grid">
