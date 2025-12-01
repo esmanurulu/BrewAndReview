@@ -228,3 +228,42 @@ body.brown-mode { background-color: var(--coffee-dark); }
 .input-group input { width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #ccc; font-family: 'Patrick Hand', cursive; font-size: 1.1rem;}
 button { width: 100%; padding: 12px; background: var(--coffee-dark); color: #fff; border:none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
 button:hover { background: #2c1e18; }
+
+/* --- SOL ÜST PROFİL SİMGESİ --- */
+.profile-icon-container {
+    position: fixed; /* Sayfa kaydırılsa bile sabit kalır */
+    top: 20px;
+    left: 20px;
+    z-index: 1000; /* Her şeyin üstünde durur */
+    transition: 0.3s;
+}
+
+.profile-icon-container img {
+    width: 50px; /* Çekirdek boyutu */
+    height: 50px;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); /* Hafif gölge */
+}
+
+.profile-icon-container:hover {
+    transform: scale(1.1) rotate(15deg); /* Üstüne gelince hafif büyür ve döner */
+    cursor: pointer;
+}
+
+/* --- NAVİGASYON BUTONU (Geri Dön) --- */
+.btn-nav {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffca28;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid #ffca28;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-nav:hover {
+    background: #ffca28;
+    color: #3e2723;
+}

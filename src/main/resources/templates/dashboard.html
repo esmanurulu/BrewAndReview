@@ -21,49 +21,76 @@
             padding: 40px;
             border-radius: 20px;
             border: 2px dashed #fcf6f0;
-            max-width: 600px;
+            width: 100%;
+            max-width: 400px; /* Mobilde daha iyi görünüm için daralttım */
+            backdrop-filter: blur(10px);
         }
-        h1 { font-family: 'Patrick Hand', cursive; font-size: 3rem; margin-bottom: 10px; }
-        p { font-size: 1.2rem; }
+        h1 { font-family: 'Patrick Hand', cursive; font-size: 3rem; margin-bottom: 5px; }
+        p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
         
-        .btn {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 25px;
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* İki kolonlu yapı */
+            gap: 15px;
+        }
+
+        .menu-item {
             background: #fcf6f0;
             color: #3e2723;
             text-decoration: none;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 15px;
             font-weight: bold;
+            font-size: 1rem;
             transition: 0.3s;
-            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .btn:hover { 
-            background: #d7ccc8; 
-            transform: translateY(-2px);
+        .menu-item:hover { transform: translateY(-3px); background: #d7ccc8; }
+        .menu-icon { font-size: 2rem; margin-bottom: 5px; }
+
+        .btn-logout {
+            display: block; margin-top: 20px; padding: 10px;
+            border: 2px solid #fcf6f0; color: #fcf6f0;
+            text-decoration: none; border-radius: 30px;
+            font-size: 0.9rem; transition: 0.3s;
         }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #fcf6f0;
-            color: #fcf6f0;
-        }
-        .btn-outline:hover {
-            background: #fcf6f0;
-            color: #3e2723;
-        }
+        .btn-logout:hover { background: #fcf6f0; color: #3e2723; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Hoşgeldin, <span th:text="${user}">Kullanıcı</span>! ☕️</h1>
-        <p>Brew&Review dünyasına giriş yaptın.</p>
+        <h1>Hoşgeldin!</h1>
+        <p><span th:text="${user}">Kullanıcı</span>, bugün ne yapmak istersin?</p>
         
-        <div style="margin-top: 30px;">
-            <a href="/cafes" class="btn">☕️ Kafeleri Keşfet</a>
-            <br>
-            <a href="/" class="btn btn-outline">Çıkış Yap</a>
+        <div class="menu-grid">
+            <a href="/cafes" class="menu-item">
+                <span class="menu-icon">☕️</span>
+                Kafeleri Keşfet
+            </a>
+            
+            <a href="/my-visits" class="menu-item">
+                <span class="menu-icon">📍</span>
+                Ziyaretlerim
+            </a>
+
+            <a href="/profile" class="menu-item">
+                <span class="menu-icon">👤</span>
+                Profilim
+            </a>
+
+            <a href="#" class="menu-item" style="opacity: 0.6; cursor: default;">
+                <span class="menu-icon">❤️</span>
+                Favoriler <br><small>(Yakında)</small>
+            </a>
         </div>
+
+        <a href="/" class="btn-logout">Çıkış Yap</a>
     </div>
 
 </body>
