@@ -98,3 +98,4 @@ Tarayıcıdan açabilirsiniz:
   <img src="src/main/resources/static/images/bean.png" alt="bean" width="40" height="40" style="vertical-align: middle;"/>
 
 </div>
+
