@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="src/main/resources/static/images/logo.png" alt="Brew&Review Logo" width="230" height="230" />
+  <img src="src/main/resources/static/images/logo.png" alt="Brew&Review Logo" width="350" height="350" />
   
   <h1>☕️ Brew&Review</h1>
   
