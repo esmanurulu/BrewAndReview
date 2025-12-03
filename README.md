@@ -1,12 +1,10 @@
 <div align="center">
 
-  <img src="src/main/resources/static/images/bean.png" alt="Brew&Review Logo" width="120" height="120" />
+  <img src="src/main/resources/static/images/logo.png" alt="Brew&Review Logo" width="120" height="120" />
   
   <h1>☕️ Brew&Review</h1>
   
-  <p>
-    <strong>Kahve Tutkunları İçin Sosyal Değerlendirme ve Keşif Platformu</strong>
-  </p>
+  <p><strong>Kahve Tutkunları İçin Sosyal Değerlendirme ve Keşif Platformu</strong></p>
 
   <p>
     <a href="#-proje-hakkında">Proje Hakkında</a> •
@@ -26,43 +24,41 @@
 
 ## 📖 Proje Hakkında
 
-**Brew&Review**, standart kafe rehberlerinin ötesine geçerek; kullanıcıların sadece mekanı değil, **baristaları** ve **menüdeki ürünleri** de ayrı ayrı değerlendirebildiği, **ziyaret geçmişini** tutabildiği ve **sosyal etkileşime** girebildiği (takip, favorileme) kapsamlı bir web uygulamasıdır.
+**Brew&Review**, standart kafe rehberlerinden farklı olarak kullanıcıların yalnızca işletmeleri değil, **ürünleri (örn. Latte)** ve **baristaları** da ayrı ayrı değerlendirebildiği sosyal bir platformdur.  
+Kullanıcılar **check-in sistemi** ile ziyaret geçmişi oluşturabilir, yorum yapabilir ve diğer kullanıcılarla sosyal etkileşime girebilir.
 
-Proje, **veri bütünlüğü** (Data Integrity) ve **performans optimizasyonu** (Index, View, Stored Procedure) odaklı geliştirilmiş olup, gerçek zamanlı bir **Bulut Veritabanı (Aiven MySQL)** üzerinde çalışmaktadır.
+Proje, **veri bütünlüğü**, **performans optimizasyonu** ve **gerçek zamanlı Bulut MySQL veritabanı yönetimi** üzerine inşa edilmiştir.
 
 ---
 
 ## ✨ Özellikler
 
-### 👤 Kullanıcı (User) Modülü
-* **Detaylı Değerlendirme:** Kafeye, spesifik bir ürüne (Örn: Latte) veya Baristaya ayrı ayrı puan ve yorum verme.
-* **Check-in Sistemi:** "Buradaydım" diyerek ziyaret kaydı oluşturma (Ziyaret etmeden yorum yapılamaz kuralı).
-* **Sosyal Ağ:** Diğer kullanıcıları ve favori baristaları takip etme.
-* **Profil Yönetimi:** Ziyaret geçmişi, yapılan yorumlar, favori kafeler ve takipçi listesi.
+### 👤 Kullanıcı Modülü
+- Kafe, ürün ve barista değerlendirmesi
+- Check-in sistemi (ziyaret etmeden yorum yapılamaz)
+- Kullanıcı takip etme, favorilere ekleme
+- Profil sayfası, ziyaret geçmişi ve yorumlar
 
-### 👔 Yönetici (Manager) Modülü
-* **İşletme Kaydı:** TC Kimlik ve İşyeri Ruhsat No ile kurumsal kayıt.
-* **Kafe Yönetimi:** Kafe bilgilerini (Saat, Telefon) güncelleme, Menü ve Personel ekleme/çıkarma.
-* **İstatistikler & Analiz:**
-    * 🔥 **Trend Ürünler:** En çok tüketilen ve yorumlanan ürünlerin analizi.
-    * 🚀 **Yoğunluk Analizi:** Kafenin en yoğun olduğu gün ve saat bilgisi.
+### 👔 Yönetici (Manager) Paneli
+- İşyeri & ruhsat doğrulamalı kayıt
+- Menü ve barista yönetimi
+- 🔥 Trend ürün analizi  
+- ⏱ Yoğun saat/gün istatistikleri
 
-### 🗺️ Harita & Keşif
-* **Akıllı Arama:** Şehir, Kafe Adı veya "Tatlısı Var mı?" filtresi.
-* **Sıralama:** A-Z veya Puana göre sıralama.
-* **Harita Görünümü:** **Leaflet.js** ve **OpenStreetMap** entegrasyonu ile kafelerin harita üzerinde pinlenmesi.
+### 🗺 Keşfet & Harita
+- Akıllı arama (şehir, kafe adı, filtreleme)
+- A–Z veya puana göre sıralama
+- Leaflet.js + OpenStreetMap harita görünümü
 
 ---
 
-## 🛠 Teknolojiler
-
-Bu proje **MVC (Model-View-Controller)** mimarisi ile geliştirilmiştir.
+## 🛠 Kullanılan Teknolojiler
 
 | Alan | Teknoloji |
 | :--- | :--- |
-| **Backend** | Java 21, Spring Boot 3.2 (Web, Data JPA) |
-| **Frontend** | Thymeleaf, HTML5, CSS3, JavaScript |
-| **Database** | MySQL 8.0 (Aiven Cloud Hosting) |
+| **Backend** | Java 21, Spring Boot 3.2 (Web, JPA) |
+| **Frontend** | Thymeleaf, HTML, CSS, JS |
+| **Database** | MySQL 8.0 (Aiven Cloud) |
 | **Map API** | Leaflet.js & OpenStreetMap |
 | **Tools** | Maven, Git, DBeaver |
 
@@ -70,27 +66,31 @@ Bu proje **MVC (Model-View-Controller)** mimarisi ile geliştirilmiştir.
 
 ## 🚀 Kurulum ve Çalıştırma
 
-Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
-
 ### 1. Projeyi Klonlayın
-Terminalinizi açın ve projeyi bilgisayarınıza indirin:
+
 ```bash
-git clone [https://github.com/esmanurulu/BrewAndReview.git](https://github.com/esmanurulu/BrewAndReview.git)
+git clone https://github.com/esmanurulu/BrewAndReview.git
 cd BrewAndReview
 2. Veritabanı Ayarlarını Yapın
-Proje Aiven Bulut Veritabanı kullanmaktadır. Güvenlik nedeniyle veritabanı şifresi GitHub'da paylaşılmamıştır. src/main/resources/application.properties dosyasını açın ve password alanını proje ekibinden temin ettiğiniz şifre ile doldurun:
+src/main/resources/application.properties dosyasını açın:
 
-Properties
-
-spring.datasource.url=jdbc:mysql://[brewandreview-uluesma8-d25c.b.aivencloud.com:22065/defaultdb?ssl-mode=REQUIRED](https://brewandreview-uluesma8-d25c.b.aivencloud.com:22065/defaultdb?ssl-mode=REQUIRED)
+properties
+Kodu kopyala
+spring.datasource.url=jdbc:mysql://brewandreview-uluesma8-d25c.b.aivencloud.com:22065/defaultdb?ssl-mode=REQUIRED
 spring.datasource.username=avnadmin
 spring.datasource.password=BURAYA_AIVEN_SIFRESINI_YAZIN
-3. Projeyi Başlatın
-Gerekli ayarları yaptıktan sonra aşağıdaki komutla uygulamayı başlatabilirsiniz:
-
-Bash
-
+3. Uygulamayı Başlatın
+bash
+Kodu kopyala
 ./mvnw spring-boot:run
-Uygulama başladığında tarayıcınızdan http://localhost:8080 adresine giderek kullanmaya başlayabilirsiniz.
+Uygulama açıldığında tarayıcınızdan:
 
-<br /> <hr /> <div align="center"> Developed with ❤️ by <strong>Esmanur Ulu & Zeynep Yetkin</strong> </div>
+👉 http://localhost:8080
+
+adresine giderek kullanmaya başlayabilirsiniz.
+
+<div align="center">
+💛 Developed with care by
+Esmanur Ulu & Zeynep Yetkin
+
+</div> ```
