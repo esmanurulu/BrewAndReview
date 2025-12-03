@@ -11,23 +11,22 @@ import java.util.List;
 @Repository
 public interface CafeRepository extends JpaRepository<Cafe, Long> {
 
-    // 1. Şehir Arama (Sıralama destekli)
+    //Şehir Arama 
     List<Cafe> findByCityContainingIgnoreCase(String city, Sort sort);
 
-    // 2. İsim Arama (Sıralama destekli)
+    //İsim Arama 
     List<Cafe> findByNameContainingIgnoreCase(String name, Sort sort);
 
-    // 3. Tatlısı Olanları Getir (Sıralama destekli)
+    //Tatlısı Olanları Getir 
     List<Cafe> findByHasDessertTrue(Sort sort);
 
-    // 4. Şehir Listesi (Otomatik Tamamlama / Datalist için)
+    //Şehir Listesi
     @Query("SELECT DISTINCT c.city FROM Cafe c ORDER BY c.city")
     List<String> findDistinctCities();
 
-    // 5. Ruhsat Numarası Kontrolü (Yeni kafe eklerken çakışma olmasın diye)
+    // Kafe Ruhsat Numarası Kontrolü (Yeni kafe eklerken çakışma yaratmamak icin)
     Cafe findByLicenseNumber(String licenseNumber);
 
-    // 6. --- YENİ EKLENEN: TREND ANALİZİ ---
     // Bir kafede en çok yorumlanan/seçilen 3 ürünü bulur.
     // (Review -> Review_Consumed_Items -> Menu_Item tablolarını birleştirir)
     @Query(value = "SELECT m.name, COUNT(rci.menu_id) as count " +

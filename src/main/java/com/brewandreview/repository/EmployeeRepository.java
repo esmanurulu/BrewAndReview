@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    // Bu satır sayesinde veritabanında kullanıcı adıyla arama yapabilirsin
     Employee findByUsername(String username);
+
+    Employee findByCitizenId(String citizenId);
 }

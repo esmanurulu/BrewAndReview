@@ -68,11 +68,11 @@ public class AdminController {
         if (dbManager != null && dbManager.getManagedCafe() != null) {
             Cafe cafe = dbManager.getManagedCafe();
 
-            // Yorum Sayısı Güncellemek
+            // kafeye gelen yorum sayisini güncellemek
             long gercekYorumSayisi = reviewRepository.findByCafe_CafeId(cafe.getCafeId()).size();
             cafe.setReviewCount((int) gercekYorumSayisi);
 
-            // Popüler Ürünler Analizi
+            // populer urun analizi
             List<Object[]> topProducts = cafeRepository.findTopProductsByCafeId(cafe.getCafeId());
             List<String> popularItems = new ArrayList<>();
             for (Object[] row : topProducts) {
@@ -82,7 +82,7 @@ public class AdminController {
             }
             model.addAttribute("popularItems", popularItems);
 
-            // Yoğun Zaman Analizi
+            // gun icinde en yogun zaman hesaplamasi
             List<Object[]> busyDay = visitRepository.findBusiestDay(cafe.getCafeId());
             List<Object[]> busyHour = visitRepository.findBusiestHour(cafe.getCafeId());
 
@@ -113,7 +113,7 @@ public class AdminController {
             @RequestParam String city,
             @RequestParam String address,
             @RequestParam String licenseNumber,
-            @RequestParam String phoneNumberRaw, // HTML'den gelen ham numara
+            @RequestParam String phoneNumberRaw,
             @RequestParam String openingHours,
             @RequestParam(defaultValue = "false") boolean hasDessert,
             HttpSession session, Model model) {
@@ -122,13 +122,13 @@ public class AdminController {
         if (manager == null)
             return "redirect:/";
 
-        // Ruhsat Kontrolü
+        // kafe acmak icin bir sart belirlemek lazimdi: isyeri lisans no??
         if (cafeRepository.findByLicenseNumber(licenseNumber) != null) {
             model.addAttribute("error", "Bu Ruhsat Numarası zaten kullanılıyor!");
             return "add-cafe";
         }
 
-        // Telefon Formatlama (+90 Ekleme)
+        // telefon numarası formatı
         String cleanNumber = phoneNumberRaw.replaceAll("\\s+", "");
         if (cleanNumber.length() != 10 || !cleanNumber.matches("\\d+")) {
             model.addAttribute("error",
@@ -189,7 +189,7 @@ public class AdminController {
             return "redirect:/";
 
         Employee dbManager = employeeRepository.findById(manager.getEmployeeId()).get();
-        // Sadece kendi kafesini düzenleyebilir
+
         if (dbManager.getManagedCafe().getCafeId().equals(cafeId)) {
 
             Cafe cafe = cafeRepository.findById(cafeId).get();
@@ -206,8 +206,7 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
-    // MENÜ YÖNETİMİ
-
+    // menu ekleme yonetme
     @GetMapping("/admin/add-menu")
     public String showAddMenuForm(HttpSession session) {
         if (session.getAttribute("currentManager") == null)
@@ -260,8 +259,8 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
-    // PERSONEL YÖNETİMİ (EKLEME & SİLME)
-
+    
+    //staff yonetimi ekle sil vs
     @GetMapping("/admin/add-staff")
     public String showAddStaffForm(HttpSession session) {
         if (session.getAttribute("currentManager") == null)
@@ -280,7 +279,7 @@ public class AdminController {
         if (manager == null)
             return "redirect:/";
 
-        // Deneyim Yılı Kontrolü (>=0)
+        // deneyim yili >=0
         if (experience < 0) {
             model.addAttribute("error", "Deneyim yılı negatif olamaz!");
             return "add-staff";
@@ -289,16 +288,15 @@ public class AdminController {
         Employee dbManager = employeeRepository.findById(manager.getEmployeeId()).get();
         Cafe cafe = dbManager.getManagedCafe();
 
-        //Employee Oluştur
+        // Employee Oluştur
         Employee newStaff = new Employee();
         newStaff.setName(name);
         newStaff.setExperienceYears(experience);
         newStaff.setRole(role);
 
-
         newStaff = employeeRepository.save(newStaff);
 
-        //Eğer Baristaysa ona USER hesabı da aç (Otomatik)
+        // Eğer Baristaysa ona USER hesabı da aç 
         if ("barista".equals(role)) {
             // Kullanıcı adı üretimi
             String generatedUsername = name.toLowerCase().replaceAll("\\s+", "") + "_" + newStaff.getEmployeeId();

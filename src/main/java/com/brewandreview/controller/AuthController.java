@@ -18,34 +18,34 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    //kayit formu
+    // kayit formu
     @GetMapping("/register")
     public String showRegisterForm() {
         return "register";
     }
 
-    //kayit islemi
+    // kayit islemi
     @PostMapping("/register")
     public String registerUser(@RequestParam String username,
             @RequestParam String email,
             @RequestParam String password,
-            @RequestParam(defaultValue = "false") boolean isBarista, // Barista mı?
+            @RequestParam(defaultValue = "false") boolean isBarista, // Barista mı??
             Model model) {
 
-        //Kullanıcı adı kontrolü
+        // kullanici adi kontrol
         if (userRepository.findByUsername(username) != null) {
             model.addAttribute("error", "Bu kullanıcı adı zaten alınmış!");
             return "register";
         }
 
-        //Yeni Kullanıcı Oluştur
+        // new user
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setEmail(email);
         newUser.setPasswordHash(password);
         newUser.setSignupDate(Timestamp.from(Instant.now()));
 
-        // Barista seçimini işle
+        //baristayse isaretleme
         if (isBarista) {
             newUser.setUserTitle("Barista ☕️");
         } else {

@@ -9,13 +9,13 @@ import java.util.List;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
-    // Kullanıcının takip ettiği kişileri getir
+    //takip edilenler listesi
     List<Follow> findByUser_UserId(Long userId);
 
-    // Takip ediyor mu kontrolü
+    // Takip ediyor mu? kontrolü
     boolean existsByUserAndEmployee(User user, Employee employee);
 
-    // Takipten çıkma islemi
+    //takipten cikis
     void deleteByUserAndEmployee(User user, Employee employee);
 
     // Beni takip edenleri bul (User olarak)

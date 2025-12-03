@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ManagerAuthController {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    @Autowired private EmployeeRepository employeeRepository;
 
     @GetMapping("/manager/register")
     public String showManagerRegisterForm() {
@@ -22,24 +21,30 @@ public class ManagerAuthController {
 
     @PostMapping("/manager/register")
     public String registerManager(@RequestParam String name,
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String citizenId,
-            Model model) {
+                                  @RequestParam String username,
+                                  @RequestParam String password,
+                                  @RequestParam String citizenId, 
+                                  Model model) {
 
-        //11 Haneli mi?
-        if (citizenId.length() != 11 || !citizenId.matches("\\d+")) {
-            model.addAttribute("error", "TC Kimlik / Sicil No 11 haneli olmalıdır!");
+        
+        if  (citizenId.length() != 11 || !citizenId.matches("\\d+")) {
+            model.addAttribute("error", "TC Kimlik / Sicil No 11 haneli ve rakamlardan oluşmalıdır!");
             return "manager-register";
         }
 
-        //Kullanıcı Adı Kontrolü
-        if (employeeRepository.findByUsername(username) != null) {
+        
+        if  (employeeRepository.findByCitizenId(citizenId) != null) {
+            model.addAttribute("error", "Bu TC Kimlik / Sicil No sisteme zaten kayıtlı!");
+            return "manager-register";
+        }
+
+        
+        if  (employeeRepository.findByUsername(username) != null) {
             model.addAttribute("error", "Bu kullanıcı adı zaten kullanımda.");
             return "manager-register";
         }
 
-        //Yeni Yönetici Oluştur
+       
         Employee newManager = new Employee();
         newManager.setName(name);
         newManager.setUsername(username);

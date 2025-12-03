@@ -17,9 +17,9 @@ public class Employee {
     @Column(name = "experience_years")
     private Integer experienceYears;
 
-    private String role; // 'barista', 'manager'
+    private String role; 
 
-    // --- YENİ EKLENENLER (Giriş ve Yönetim İçin) ---
+    
 
     @Column(unique = true)
     private String username;
@@ -27,16 +27,16 @@ public class Employee {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    // Yönetici Kaydı için TC / Sicil No
+    
     @Column(name = "citizen_id", unique = true, length = 11)
     private String citizenId;
 
-    // Bir Manager sadece 1 kafeyi yönetir
+    //iliski
     @OneToOne
     @JoinColumn(name = "managed_cafe_id")
     private Cafe managedCafe;
 
-    // --- Getter ve Setterlar ---
+    //getter ve setter
 
     public Long getEmployeeId() {
         return employeeId;

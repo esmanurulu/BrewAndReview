@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Kullanıcı adına göre arama yapan sihirli metod
+    // Kullanıcı adına göre arama yapmak
     User findByUsername(String username);
 }

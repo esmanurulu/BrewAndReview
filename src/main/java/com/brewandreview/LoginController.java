@@ -46,7 +46,7 @@ public class LoginController {
         Map<String, String> response = new HashMap<>();
 
         if ("admin".equals(type)) {
-            // YÖNETİCİ GİRİŞİ
+            // ADMIN GİRİŞİ
             Employee emp = employeeRepository.findByUsername(username);
 
             if (emp != null && emp.getPasswordHash().trim().equals(password.trim())
@@ -74,10 +74,9 @@ public class LoginController {
         return response;
     }
 
-    // --- GÜVENLİ ÇIKIŞ ---
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // Tüm oturum bilgilerini sil
-        return "redirect:/"; // Ana sayfaya tertemiz gönder
+        session.invalidate();
+        return "redirect:/"; // introya yonlendir
     }
 }

@@ -14,18 +14,18 @@ public class Follow {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Takip eden kişi
+    private User user; //takip eden
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    private Employee employee; // Takip edilen çalışan
+    private Employee employee; //takip edilen barista
 
     @ManyToOne
     @JoinColumn(name = "cafe_id")
-    private Cafe cafe; // Takip edilen kafe
+    private Cafe cafe; //takip edilen kafe
 
     @ManyToOne
-    @JoinColumn(name = "followed_user_id") // YENİ
+    @JoinColumn(name = "followed_user_id") 
     private User followedUser; // Takip edilen başka bir kullanıcı
 
     @Column(name = "follow_date")

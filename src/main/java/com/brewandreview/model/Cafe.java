@@ -33,12 +33,24 @@ public class Cafe {
     @Column(name = "review_count")
     private Integer reviewCount;
 
-    // --- YENİ EKLENEN: İŞYERİ RUHSAT NO ---
-    // Her kafenin benzersiz bir ruhsat numarası olur
-    @Column(name = "license_number", unique = true, length = 20)
+    @Column(name = "license_number", unique = true)
     private String licenseNumber;
 
-    // --- İLİŞKİLER ---
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "opening_hours")
+    private String openingHours;
+
+    // mapping icin eklendi, su anlik islevsiz
+    @Column(precision = 10, scale = 6)
+    private BigDecimal latitude; // Enlem
+
+    // mapping icin eklendi, su anlik islevsiz
+    @Column(precision = 10, scale = 6)
+    private BigDecimal longitude; // Boylam
+
+    // ***iliskiler
     @ManyToMany
     @JoinTable(name = "Cafe_Menu", joinColumns = @JoinColumn(name = "cafe_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
     private List<MenuItem> menuItems;
@@ -47,7 +59,7 @@ public class Cafe {
     @JoinTable(name = "Employee_Cafe", joinColumns = @JoinColumn(name = "cafe_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
-    // --- Getter ve Setterlar ---
+    // **getter&setter
     public Long getCafeId() {
         return cafeId;
     }
@@ -112,53 +124,6 @@ public class Cafe {
         this.licenseNumber = licenseNumber;
     }
 
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
-    }
-
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public boolean isOpenNow() {
-        if (this.openingHours == null || !this.openingHours.contains("-")) {
-            return false; // Format bozuksa kapalı varsay
-        }
-        try {
-            // Örn: "09:00-23:00"
-            String[] parts = this.openingHours.split("-");
-            String startStr = parts[0].trim();
-            String endStr = parts[1].trim();
-
-            LocalTime now = LocalTime.now();
-            LocalTime start = LocalTime.parse(startStr, DateTimeFormatter.ofPattern("HH:mm"));
-            LocalTime end = LocalTime.parse(endStr, DateTimeFormatter.ofPattern("HH:mm"));
-
-            // Gece yarısı geçişini kontrol et (Örn: 18:00 - 02:00)
-            if (end.isBefore(start)) {
-                return now.isAfter(start) || now.isBefore(end);
-            } else {
-                return now.isAfter(start) && now.isBefore(end);
-            }
-        } catch (Exception e) {
-            return false; // Hata olursa kapalı göster
-        }
-    }
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "opening_hours")
-    private String openingHours;
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -175,4 +140,59 @@ public class Cafe {
         this.openingHours = openingHours;
     }
 
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    // cafe detail'de- su an acik mi? konrtolu
+    public boolean isOpenNow() {
+        if (this.openingHours == null || !this.openingHours.contains("-")) {
+            return false;
+        }
+        try {
+            String[] parts = this.openingHours.split("-");
+            String startStr = parts[0].trim();
+            String endStr = parts[1].trim();
+
+            LocalTime now = LocalTime.now();
+            LocalTime start = LocalTime.parse(startStr, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime end = LocalTime.parse(endStr, DateTimeFormatter.ofPattern("HH:mm"));
+
+            if (end.isBefore(start)) {
+                return now.isAfter(start) || now.isBefore(end);
+            } else {
+                return now.isAfter(start) && now.isBefore(end);
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
