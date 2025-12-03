@@ -77,5 +77,20 @@ Terminalinizi açın ve projeyi bilgisayarınıza indirin:
 ```bash
 git clone [https://github.com/esmanurulu/BrewAndReview.git](https://github.com/esmanurulu/BrewAndReview.git)
 cd BrewAndReview
+2. Veritabanı Ayarlarını Yapın
+Proje Aiven Bulut Veritabanı kullanmaktadır. Güvenlik nedeniyle veritabanı şifresi GitHub'da paylaşılmamıştır. src/main/resources/application.properties dosyasını açın ve password alanını proje ekibinden temin ettiğiniz şifre ile doldurun:
 
-<div align="center"> Developed with ❤️ by <strong>Esmanur Ulu & Zeynep Yetkin</strong> </div>
+Properties
+
+spring.datasource.url=jdbc:mysql://[brewandreview-uluesma8-d25c.b.aivencloud.com:22065/defaultdb?ssl-mode=REQUIRED](https://brewandreview-uluesma8-d25c.b.aivencloud.com:22065/defaultdb?ssl-mode=REQUIRED)
+spring.datasource.username=avnadmin
+spring.datasource.password=BURAYA_AIVEN_SIFRESINI_YAZIN
+3. Projeyi Başlatın
+Gerekli ayarları yaptıktan sonra aşağıdaki komutla uygulamayı başlatabilirsiniz:
+
+Bash
+
+./mvnw spring-boot:run
+Uygulama başladığında tarayıcınızdan http://localhost:8080 adresine giderek kullanmaya başlayabilirsiniz.
+
+<br /> <hr /> <div align="center"> Developed with ❤️ by <strong>Esmanur Ulu & Zeynep Yetkin</strong> </div>
