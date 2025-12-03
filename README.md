@@ -9,8 +9,8 @@
   <p>
     <a href="#-proje-hakkında">Proje Hakkında</a> •
     <a href="#-özellikler">Özellikler</a> •
-    <a href="#-teknolojiler">Teknolojiler</a> •
-    <a href="#-kurulum-ve-çalıştırma">Kurulum</a>
+    <a href="#teknolojiler">Teknolojiler</a> •
+    <a href="#kurulum-ve-çalıştırma">Kurulum</a>
   </p>
 
   ![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
@@ -89,7 +89,7 @@ Tarayıcıdan açabilirsiniz:
 ```bash
 👉 http://localhost:8080
 ```
-
+ <img src="src/main/resources/static/images/bean.png" alt="Brew&Review Logo" width="100" height="100" />
 <div align="center">
 
 Developed with ❤️ by
